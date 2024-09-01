@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nytarticles/models/nytimes_response.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -54,8 +55,13 @@ class ArticleDetailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'By ${article.byline}',
+                  '${article.byline}',
                   style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  getDateFormat(article.pubDate),
+                  style: const TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -78,6 +84,14 @@ class ArticleDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  getDateFormat(date){
+    String inputDateString = date;
+    DateTime parsedDate = DateTime.parse(inputDateString);
+    String outputDateString = DateFormat('yyyy-MM-dd').format(parsedDate);
+
+    return outputDateString;
   }
 
   void _launchURL(String url) async {
